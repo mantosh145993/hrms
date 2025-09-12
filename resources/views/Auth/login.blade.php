@@ -12,7 +12,7 @@
     <div class="container">
          <form class="user" method="POST" action="{{ route('login') }}">
             @csrf
-            <h2>Bodmas@HRMS</h2>
+            <h2>HRMS</h2>
             <div class="uc"><b>Sign In</b></div>
 
             <div class="inputBox">
@@ -26,12 +26,12 @@
             </div>
             <input type="submit" value="Login">
 
-            <div class="link-container">
+            <!-- <div class="link-container">
                 <a href="#">Forgot Password?</a>
             </div>
             <div class="link-container">
                 <a href="#">Signup</a>
-            </div>
+            </div> -->
         </form>
     </div>
 </body>

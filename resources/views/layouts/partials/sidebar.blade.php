@@ -37,10 +37,12 @@
                    <a href="{{ route('users.index') }}" class="collapse-item">Employees</a>
                    <a class="collapse-item" href="{{ route('tasks.index') }}">Assign Task</a>
                    <a href="{{ route('shifts.index') }}" class="collapse-item">Shifts</a>
+                @if(Auth::user()->role == 'manager')
                    <a href="{{ route('holidays.index') }}" class="collapse-item">Holidays</a>
+                   <a href="{{route('leave.applied')}}" class="collapse-item" >Applied Leave</a>
+                @endif
                    <a href="{{ route('attendance.index') }}" class="collapse-item">Attendance</a>
                   <a href="{{ route('leave-types.index') }}" class="collapse-item">Leave Type</a>
-                  <a href="{{route('leave.applied')}}" class="collapse-item" >Applied Leave</a>
                </div>
            </div>
            <li class="nav-item">
@@ -101,7 +103,7 @@
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rais-concern"
                aria-expanded="true" aria-controls="rais-concern">
                <i class="fas fa-fw fa-portrait"></i>
-               <span>Suggation Box</span>
+               <span>Feedback Box</span>
            </a>
            <div id="rais-concern" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
@@ -116,13 +118,13 @@
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#month-star"
                aria-expanded="true" aria-controls="month-star">
                <i class="fas fa-fw fa-balance-scale-right"></i>
-               <span>Bodmas Star Employee</span>
+               <span>Bodmas Star</span>
            </a>
            <div id="month-star" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                    <h6 class="collapse-header">Star Utilities:</h6>
-                   <a class="collapse-item" href="#">Star Employee</a>
+                   <a class="collapse-item" href="#"> Employee</a>
                </div>
            </div>
        </li>
