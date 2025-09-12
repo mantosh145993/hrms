@@ -32,6 +32,7 @@
         <p>Smart HR Management Software to streamline your workforce, payroll, and productivity.</p>
         <a href="#services" class="cta-button">Explore Our Services</a>
     </div>
+    <hr>
     <!-- About Section  -->
     <div class="container" id="about">
         <section>
@@ -46,8 +47,10 @@
             </p>
         </section>
     </div>
+    <hr>
     <!-- Services Section -->
     <div class="container" id="services">
+        <section>
             <h1>Our Services</h1>
             <div>
                 <div class="service-card">
@@ -68,20 +71,18 @@
                 </div>
             </div>
     </div>
+    </section>
+    <hr>
     <!-- Contact Section -->
     <div class="container" id="contact">
         <section>
             <h1>Contact Us</h2>
-            <p>Have questions or need a demo? Reach out to us today!</p>
-            <p><strong>Email:</strong> info@bodmaseducation.com</p>
-            <p><strong>Phone:</strong> +91 9899222022</p>
-            <a href="mailto:info@bodmaseducation.com" class="cta-button">Call Us : 9899222022</a>
+                <p>Have questions or need a demo? Reach out to us today!</p>
+                <p><strong>Email:</strong> info@bodmaseducation.com</p>
+                <p><strong>Phone:</strong> +91 9899222022</p>
+                <a href="mailto:info@bodmaseducation.com" class="cta-button">Call Us : 9899222022</a>
         </section>
     </div>
-    <!-- Footer Section -->
-    <footer >
-        <p class="text-center">&copy; 2025 Bodmas HRMS Solutions. All rights reserved.</p>
-    </footer>
 </body>
 
 </html>
@@ -129,7 +130,7 @@
         .nav-links {
             display: none;
             flex-direction: column;
-            /* background: #0D5EF4; */
+            background: #000d25;
             position: absolute;
             top: 60px;
             right: 0;
@@ -215,7 +216,7 @@
     }
 
     .container {
-        height: 50vh;
+        height: 100vh;
         text-align: center;
         padding: 50px 20px;
         display: flex;
