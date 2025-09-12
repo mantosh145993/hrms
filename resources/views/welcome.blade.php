@@ -1,348 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Landing Page</title>
+    <title>Bodmas Hrms</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  </head>
-  <body>
+</head>
+
+<body>
+    <!--Nav section -->
     <div class="navbar" id="navbar">
-      <div class="logo">
-        <a href="#" style="font-size: 20px;">Landing Stars</a>
-      </div>
-      <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-      </div>
+        <div class="logo">
+            <a href="#">HRMS</a>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
     </div>
-    <div class="container">
-      <h1>Welcome to Landing Stars</h1>
-      <p>Explore the beauty of dynamic backgrounds.</p>
-      <a href="#features" class="cta-button">Learn More</a>
+    <!-- Home section  -->
+    <div class="container" id="home">
+        <h1>Welcome to Bodmas HRMS Solutions</h1>
+        <p>Smart HR Management Software to streamline your workforce, payroll, and productivity.</p>
+        <a href="#services" class="cta-button">Explore Our Services</a>
     </div>
-    <div class="container">
-      <h1>Features</h1>
-      <div class="features">
-        <div class="feature-item">
-          <h2>Feature 1</h2>
-          <p>Detail about Feature 1.</p>
-        </div>
-        <div class="feature-item">
-          <h2>Feature 2</h2>
-          <p>Detail about Feature 2.</p>
-        </div>
-        <div class="feature-item">
-          <h2>Feature 3</h2>
-          <p>Detail about Feature 3.</p>
-        </div>
-      </div>
-      <div class="logos">
-        <img src="https://via.placeholder.com/100" alt="Logo 1">
-        <img src="https://via.placeholder.com/100" alt="Logo 2">
-        <img src="https://via.placeholder.com/100" alt="Logo 3">
-        <img src="https://via.placeholder.com/100" alt="Logo 4">
-      </div>
+    <!-- About Section  -->
+    <div class="container" id="about">
+        <section>
+            <h1>About Us</h1>
+            <p>
+                At <strong>Bodmas HRMS Solutions</strong>, we help businesses simplify their HR operations with modern,
+                user-friendly software. Our goal is to empower organizations by automating manual HR tasks, improving
+                efficiency, and enabling smarter decision-making.
+            </p>
+            <p>
+                Whether you're a startup or an enterprise, our HRMS adapts to your needs and grows with your business.
+            </p>
+        </section>
     </div>
-    <div class="container">
-      <h1>Image Slider</h1>
-      <div class="slider">
-        <div class="slides">
-          <div class="slide"><img src="https://via.placeholder.com/800x400" alt="Slide 1"></div>
-          <div class="slide"><img src="https://via.placeholder.com/800x400" alt="Slide 2"></div>
-          <div class="slide"><img src="https://via.placeholder.com/800x400" alt="Slide 3"></div>
-        </div>
-        <div class="slider-buttons">
-          <button class="slider-button" id="prevBtn">&#10094;</button>
-          <button class="slider-button" id="nextBtn">&#10095;</button>
-        </div>
-      </div>
+    <!-- Services Section -->
+    <div class="container" id="services">
+            <h1>Our Services</h1>
+            <div>
+                <div class="service-card">
+                    <h3>Employee Management</h3>
+                    <p>Maintain complete employee records, attendance, and performance in one centralized system.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Payroll Automation</h3>
+                    <p>Generate accurate payslips, manage compliance, and automate salary disbursement with ease.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Leave & Attendance</h3>
+                    <p>Track attendance, manage leave requests, and integrate biometric/remote attendance systems.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Reports & Analytics</h3>
+                    <p>Get insights into workforce productivity, payroll costs, and HR operations with detailed reports.</p>
+                </div>
+            </div>
     </div>
-    <div class="particles"></div>
-    <div class="star-background"></div>
-  </body>
+    <!-- Contact Section -->
+    <div class="container" id="contact">
+        <section>
+            <h1>Contact Us</h2>
+            <p>Have questions or need a demo? Reach out to us today!</p>
+            <p><strong>Email:</strong> info@bodmaseducation.com</p>
+            <p><strong>Phone:</strong> +91 9899222022</p>
+            <a href="mailto:info@bodmaseducation.com" class="cta-button">Call Us : 9899222022</a>
+        </section>
+    </div>
+    <!-- Footer Section -->
+    <footer >
+        <p class="text-center">&copy; 2025 Bodmas HRMS Solutions. All rights reserved.</p>
+    </footer>
+</body>
+
 </html>
 <style>
-    body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-  font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(to bottom, #0d0d2b, #000000);
-  color: white;
-}
+    .logo a {
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+    }
 
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
+    .nav-links {
+        display: flex;
+        gap: 15px;
+    }
 
-::-webkit-scrollbar-track {
-  background: #0C0C27;
-}
+    .nav-links a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        transition: 0.3s;
+    }
 
-::-webkit-scrollbar-thumb {
-  background: #ff4081;
-  border-radius: 6px;
-}
+    .nav-links a:hover {
+        color: #FFD700;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #e00070;
-}
+    /* Hamburger Icon */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
 
-.navbar {
-  position: fixed;
-  top: 40px; /* Added more margin-top */
-  left: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  margin: 0 60px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  align-items: center;
-  transition: background 0.3s, color 0.1s, top 0.3s, left 0.3s, right 0.3s, padding 0.3s, margin 0.3s, box-shadow 0.3s;
-  z-index: 1000;
-}
+    .menu-toggle span {
+        height: 3px;
+        width: 25px;
+        background: white;
+        margin: 4px 0;
+        transition: 0.4s;
+    }
 
-.navbar.sticky {
-  background: #0C0C27;
-  color: #ff4081;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* White shadow */
-}
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            /* background: #0D5EF4; */
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 200px;
+            text-align: right;
+            padding: 15px;
+        }
 
-.navbar a {
-  color: inherit; /* Use inherit to ensure color change on scroll */
-  text-decoration: none;
-  font-weight: 600;
-  margin: 0 15px;
-  transition: color 0.3s;
-}
+        .nav-links.active {
+            display: flex;
+        }
 
-.container {
-  height: 100vh;
-  text-align: center;
-  padding: 50px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 2; /* Ensure content is above particles */
-}
+        .menu-toggle {
+            display: flex;
+        }
+    }
 
-.container:nth-child(odd) {
-  background: rgba(0, 0, 0, 0.253);
-}
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(to bottom, #0d0d2b, #000000);
+        color: white;
+    }
 
-h1 {
-  font-size: 3em;
-  margin-bottom: 0.5em;
-}
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
 
-p {
-  font-size: 1.5em;
-  margin-bottom: 1em;
-}
+    ::-webkit-scrollbar-track {
+        background: #0C0C27;
+    }
 
-.cta-button {
-  background: linear-gradient(135deg, #ff4081, #e00070);
-  padding: 1em 2em;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
+    ::-webkit-scrollbar-thumb {
+        background: #ff4081;
+        border-radius: 6px;
+    }
 
-.cta-button:hover {
-  background: linear-gradient(135deg, #e00070, #ff4081);
-  box-shadow: 0 0 25px rgba(255, 64, 129, 0.7);
-}
+    ::-webkit-scrollbar-thumb:hover {
+        background: #e00070;
+    }
 
-.particles {
-  position: fixed; /* Changed to fixed */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1; /* Ensure particles are below content */
-}
+    .navbar {
+        position: fixed;
+        top: 40px;
+        /* Added more margin-top */
+        left: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        margin: 0 60px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        align-items: center;
+        transition: background 0.3s, color 0.1s, top 0.3s, left 0.3s, right 0.3s, padding 0.3s, margin 0.3s, box-shadow 0.3s;
+        z-index: 1000;
+    }
 
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 5px 1px white;
-  animation: float 10s infinite;
-}
+    .navbar.sticky {
+        background: #0C0C27;
+        color: #ff4081;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        /* White shadow */
+    }
 
-@keyframes float {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100vh) translateX(calc(-50vw + 100%));
-    opacity: 0;
-  }
-}
+    .navbar a {
+        color: inherit;
+        /* Use inherit to ensure color change on scroll */
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0 15px;
+        transition: color 0.3s;
+    }
 
-/* Small stars background */
-.star-background {
-  position: fixed; /* Changed to fixed */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  z-index: 0; /* Ensure star background is below everything */
-}
+    .container {
+        height: 50vh;
+        text-align: center;
+        padding: 50px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        /* Ensure content is above particles */
+    }
 
-.star {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  background: white;
-  opacity: 0.8;
-}
+    .container:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.253);
+    }
 
-/* Additional section styling */
-.features {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 20px;
-}
+    h1 {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+    }
 
-.feature-item {
-  max-width: 300px;
-  text-align: center;
-  padding: 20px;
-}
+    p {
+        font-size: 1.5em;
+        margin-bottom: 1em;
+    }
 
-.logos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 20px;
-}
+    .cta-button {
+        background: linear-gradient(135deg, #ff4081, #e00070);
+        padding: 1em 2em;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.logos img {
-  max-width: 100px;
-  margin: 20px;
-}
+    .cta-button:hover {
+        background: linear-gradient(135deg, #e00070, #ff4081);
+        box-shadow: 0 0 25px rgba(255, 64, 129, 0.7);
+    }
 
-.slider {
-  width: 80%;
-  max-width: 800px;
-  overflow: hidden;
-  position: relative;
-  margin: 20px auto;
-}
+    .particles {
+        position: fixed;
+        /* Changed to fixed */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+        /* Ensure particles are below content */
+    }
 
-.slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        box-shadow: 0 0 5px 1px white;
+        animation: float 10s infinite;
+    }
 
-.slide {
-  min-width: 100%;
-  box-sizing: border-box;
-}
+    @keyframes float {
+        0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0.7;
+        }
 
-.slider img {
-  width: 100%;
-  border-radius: 10px;
-}
+        50% {
+            opacity: 1;
+        }
 
-.slider-buttons {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-}
+        100% {
+            transform: translateY(-100vh) translateX(calc(-50vw + 100%));
+            opacity: 0;
+        }
+    }
 
-.slider-button {
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-}
+    /* Small stars background */
+    .star-background {
+        position: fixed;
+        /* Changed to fixed */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 0;
+        /* Ensure star background is below everything */
+    }
+
+    .star {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: white;
+        opacity: 0.8;
+    }
+
+    /* Additional section styling */
+    .features {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .feature-item {
+        max-width: 300px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .logos img {
+        max-width: 100px;
+        margin: 20px;
+    }
+
+    .slider {
+        width: 80%;
+        max-width: 800px;
+        overflow: hidden;
+        position: relative;
+        margin: 20px auto;
+    }
+
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .slider img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .slider-buttons {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+
+    .slider-button {
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+    }
 </style>
 <script>
-    window.onscroll = function() {stickNavbar()};
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
 
-const navbar = document.getElementById("navbar");
-const sticky = navbar.offsetTop;
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+    window.onscroll = function() {
+        stickNavbar()
+    };
 
-function stickNavbar() {
-  if (window.pageYOffset > sticky) {
-    navbar.classList.add("sticky");
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
+    const navbar = document.getElementById("navbar");
+    const sticky = navbar.offsetTop;
 
-const particleContainer = document.querySelector('.particles');
-const starBackground = document.querySelector('.star-background');
+    function stickNavbar() {
+        if (window.pageYOffset > sticky) {
+            navbar.classList.add("sticky");
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
 
-for (let i = 0; i < 100; i++) {
-  const particle = document.createElement('div');
-  particle.classList.add('particle');
-  particle.style.top = `${Math.random() * 100}vh`;
-  particle.style.left = `${Math.random() * 100}vw`;
-  particle.style.animationDelay = `${Math.random() * 10}s`;
-  particleContainer.appendChild(particle);
-}
+    const particleContainer = document.querySelector('.particles');
+    const starBackground = document.querySelector('.star-background');
 
-for (let i = 0; i < 300; i++) {
-  const star = document.createElement('div');
-  star.classList.add('star');
-  star.style.top = `${Math.random() * 100}vh`;
-  star.style.left = `${Math.random() * 100}vw`;
-  starBackground.appendChild(star);
-}
+    for (let i = 0; i < 100; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDelay = `${Math.random() * 10}s`;
+        particleContainer.appendChild(particle);
+    }
 
-// Slider functionality
-const slides = document.querySelector('.slides');
-const slide = document.querySelectorAll('.slide');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
+    for (let i = 0; i < 300; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        starBackground.appendChild(star);
+    }
 
-let index = 0;
+    // Slider functionality
+    const slides = document.querySelector('.slides');
+    const slide = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-function showSlide(n) {
-  index += n;
-  if (index >= slide.length) {
-    index = 0;
-  }
-  if (index < 0) {
-    index = slide.length - 1;
-  }
-  slides.style.transform = 'translateX(' + (-index * 100) + '%)';
-}
+    let index = 0;
 
-prevBtn.addEventListener('click', () => showSlide(-1));
-nextBtn.addEventListener('click', () => showSlide(1));
+    function showSlide(n) {
+        index += n;
+        if (index >= slide.length) {
+            index = 0;
+        }
+        if (index < 0) {
+            index = slide.length - 1;
+        }
+        slides.style.transform = 'translateX(' + (-index * 100) + '%)';
+    }
+
+    prevBtn.addEventListener('click', () => showSlide(-1));
+    nextBtn.addEventListener('click', () => showSlide(1));
 </script>

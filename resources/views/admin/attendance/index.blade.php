@@ -68,13 +68,13 @@
             <tbody>
                 @forelse($attendances as $attendance)
                 <tr>
-                    <td>{{ $attendance->user->name }}</td>
-                    <td>{{\Carbon\Carbon::parse($attendance->work_date)->format('d M Y (D)') }}</td>
-                    <td>{{ $attendance->check_in_at ? $attendance->check_in_at->format('H:i:s') : '-' }}</td>
-                    <td>{{ $attendance->check_out_at ? $attendance->check_out_at->format('H:i:s') : '-' }}</td>
-                    <td>{{ $attendance->worked_time }}</td>
-                    <td>{{ $attendance->late_time }}</td>
-                    <td>{{ $attendance->overtime }}</td>
+                    <td>{{ $attendance->user->name ?? 'N/A' }}</td>
+                    <td>{{\Carbon\Carbon::parse($attendance->work_date)->format('d M Y (D)') ?? 'N/A' }}</td>
+                    <td>{{ $attendance->check_in_at ? $attendance->check_in_at->format('H:i:s') : 'N/A' }}</td>
+                    <td>{{ $attendance->check_out_at ? $attendance->check_out_at->format('H:i:s') : 'N/A' }}</td>
+                    <td>{{ $attendance->worked_time ?? 'N/A' }}</td>
+                    <td>{{ $attendance->late_time ?? 'N/A' }}</td>
+                    <td>{{ $attendance->overtime ?? 'N/A' }}</td>
                     <td>
                         @php
                         $statusColors = [

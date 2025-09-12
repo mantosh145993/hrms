@@ -42,7 +42,7 @@
                         <td class="fw-semibold">{{ \Carbon\Carbon::parse($day['date'])->format('d M Y (D)') }}</td>
                         <td>{{ $day['check_in_at'] ?? '-' }}</td>
                         <td>{{ $day['check_out_at'] ?? '-' }}</td>
-                        <td>{{ $day['worked_time'] ?? '-' }}</td>
+                        <td>{{ $day['worked_time'] ?? 'N/A' }}</td>
                         <td>{{ $day['late_time'] ?? '-' }}</td>
                         <td>{{ $day['overtime'] ?? '-' }}</td>
                         <td>
