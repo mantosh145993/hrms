@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Holidays</h2>
-    <a href="{{ route('holidays.create') }}" class="btn btn-dark mb-3">Add Holiday</a>
+    <a href="{{ route('holidays.create') }}" class="btn btn-primary mb-3">Add Holiday</a>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -24,10 +24,10 @@
                 <td>{{ $holiday->title }}</td>
                 <td>{{ $holiday->is_paid ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ route('holidays.edit',$holiday) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ route('holidays.edit',$holiday) }}" class="btn btn-sm btn-warning">Update</a>
                     <form action="{{ route('holidays.destroy',$holiday) }}" method="POST" class="d-inline">
                         @csrf @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this holiday?')">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this holiday?')">Remove</button>
                     </form>
                 </td>
             </tr>

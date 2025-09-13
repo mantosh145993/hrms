@@ -34,6 +34,7 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'start_date' => 'required|date',

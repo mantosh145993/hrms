@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Tasks</h1>
-    <a href="{{ route('tasks.create') }}" class="btn btn-dark mb-3">Add Task</a>
+    <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add new task</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -27,10 +27,10 @@
                     <td>{{ $task->user?->name ?? 'Unassigned' }}</td>
                     <td>{{ ucfirst($task->status) }}</td>
                     <td>
-                        <a href="{{ route('tasks.edit', $task) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('tasks.edit', $task) }}" class="btn btn-warning btn-sm">Feedback</a>
                         <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button onclick="return confirm('Delete this task?')" class="btn btn-danger btn-sm">Delete</button>
+                            <button onclick="return confirm('Delete this task?')" class="btn btn-danger btn-sm">Remove</button>
                         </form>
                     </td>
                 </tr>

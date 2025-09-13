@@ -13,7 +13,7 @@
        <li class="nav-item active">
            <a class="nav-link" href="#">
                <i class="fas fa-fw fa-tachometer-alt"></i>
-               <span>HRMS Dashboard</span></a>
+               <span>HRMS Panel</span></a>
        </li>
        <!-- Divider -->
        <hr class="sidebar-divider">
@@ -24,7 +24,7 @@
        <!-- Nav Item - Pages Collapse Menu -->
 
         <!-- Admin Auth  -->
-       @if(Auth::user()->role == 'admin')
+       @if(Auth::user()->role == 'admin')   
        <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
@@ -37,11 +37,11 @@
                    <a href="{{ route('users.index') }}" class="collapse-item">Employees</a>
                    <a class="collapse-item" href="{{ route('tasks.index') }}">Assign Task</a>
                    <a href="{{ route('shifts.index') }}" class="collapse-item">Shifts</a>
-                @if(Auth::user()->role == 'manager')
+               
                    <a href="{{ route('holidays.index') }}" class="collapse-item">Holidays</a>
                    <a href="{{route('leave.applied')}}" class="collapse-item" >Applied Leave</a>
-                @endif
-                   <a href="{{ route('attendance.index') }}" class="collapse-item">Attendance</a>
+           
+                   <a href="{{ route('attendance.index') }}" class="collapse-item">Attendance Report</a>
                   <a href="{{ route('leave-types.index') }}" class="collapse-item">Leave Type</a>
                </div>
            </div>
