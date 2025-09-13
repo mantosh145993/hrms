@@ -21,7 +21,7 @@ class User extends Authenticatable
 
     public function tasks()
     {
-        return $this->hasMany(Task::class, 'assigned_to');
+        return $this->hasMany(Task::class, 'user_id');
     }
 
     /**
@@ -59,4 +59,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Attendance::class)->whereDate('work_date', now()->toDateString());
     }
+
+
 }

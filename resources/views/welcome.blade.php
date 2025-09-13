@@ -24,6 +24,8 @@
             <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#contact">Contact</a>
+            <a href="{{ route('login') }}" class="cta-button">Login</a>
+
         </div>
     </div>
     <!-- Home section  -->
