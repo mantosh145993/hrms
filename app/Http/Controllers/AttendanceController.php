@@ -28,34 +28,75 @@ class AttendanceController extends Controller
         return view('Employee/Dashboard', compact('todayRow', 'summary'));
     }
 
+    // public function checkIn(Request $request)
+    // {
+    //     $user = auth()->user();
+    //     $tzNow = now()->timezone('Asia/Kolkata');
+    //     $workDate = $tzNow->toDateString();
+    //     $attendance = Attendance::firstOrCreate(
+    //         ['user_id' => $user->id, 'work_date' => $workDate],
+    //         ['status' => 'present']
+    //     );
+    //     if ($attendance->check_in_at) {
+    //         return back()->with('info', 'Already checked in.');
+    //     }
+    //     $attendance->check_in_at = $tzNow;
+    //     // compute late time
+    //     $shift = $user->shift ?: Shift::first(); // fallback
+    //     $shiftStart = Carbon::parse($attendance->work_date->format('Y-m-d') . ' 09:30:00');
+    //     $grace = $shift->grace_minutes ?? 0;
+    //     $late = $tzNow->greaterThan($shiftStart->copy()->addMinutes($grace))
+    //         ? $shiftStart->diffInMinutes($tzNow)
+    //         : 0;
+    //     $attendance->late_minutes = $late;
+    //     $attendance->meta = [
+    //         'check_in_ip' => $request->ip(),
+    //         'ua' => $request->userAgent(),
+    //         'status' => 'present'
+    //     ];
+    //     $attendance->save();
+    //     return back()->with('success', 'Checked in successfully.');
+    // }
+
     public function checkIn(Request $request)
     {
         $user = auth()->user();
         $tzNow = now()->timezone('Asia/Kolkata');
         $workDate = $tzNow->toDateString();
-        $attendance = Attendance::firstOrCreate(
-            ['user_id' => $user->id, 'work_date' => $workDate],
-            ['status' => 'present']
-        );
+
+        $attendance = Attendance::firstOrNew([
+            'user_id' => $user->id,
+            'work_date' => $workDate,
+        ]);
+
         if ($attendance->check_in_at) {
             return back()->with('info', 'Already checked in.');
         }
+
+        // Update status from absent → present
+        $attendance->status = 'present';
         $attendance->check_in_at = $tzNow;
-        // compute late time
-        $shift = $user->shift ?: Shift::first(); // fallback
-        $shiftStart = Carbon::parse($attendance->work_date->format('Y-m-d') . ' 09:30:00');
+
+        // shift details
+        $shift = $user->shift ?: Shift::first();
+        $shiftStart = Carbon::parse($attendance->work_date . ' 09:30:00');
         $grace = $shift->grace_minutes ?? 0;
+
         $late = $tzNow->greaterThan($shiftStart->copy()->addMinutes($grace))
             ? $shiftStart->diffInMinutes($tzNow)
             : 0;
+
         $attendance->late_minutes = $late;
         $attendance->meta = [
             'check_in_ip' => $request->ip(),
             'ua' => $request->userAgent(),
+            'status' => 'present',
         ];
         $attendance->save();
+
         return back()->with('success', 'Checked in successfully.');
     }
+
 
     public function checkOut(Request $request)
     {
@@ -157,5 +198,4 @@ class AttendanceController extends Controller
         $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
         return Excel::download(new AttendanceReportExport($startDate, $endDate), 'attendance_report.xlsx');
     }
-
 }
