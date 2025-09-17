@@ -79,7 +79,7 @@ class AttendanceController extends Controller
 
         // shift details
         $shift = $user->shift ?: Shift::first();
-        $shiftStart = Carbon::parse($attendance->work_date . ' 09:30:00');
+        $shiftStart = Carbon::createFromFormat('Y-m-d H:i:s', $workDate . ' 09:30:00');
         $grace = $shift->grace_minutes ?? 0;
 
         $late = $tzNow->greaterThan($shiftStart->copy()->addMinutes($grace))
@@ -93,7 +93,6 @@ class AttendanceController extends Controller
             'status' => 'present',
         ];
         $attendance->save();
-
         return back()->with('success', 'Checked in successfully.');
     }
 
