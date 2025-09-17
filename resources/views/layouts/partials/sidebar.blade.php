@@ -29,27 +29,25 @@
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                <i class="fas fa-fw fa-cog"></i>
-               <span>Manage Employee</span>
+               <span>Employee</span>
            </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                    <h6 class="collapse-header">Manage Components:</h6>
                    <a href="{{ route('users.index') }}" class="collapse-item">Employees</a>
-                   <a class="collapse-item" href="{{ route('tasks.index') }}">Assign Task</a>
-                   <a href="{{ route('shifts.index') }}" class="collapse-item">Shifts</a>
-               
-                   <a href="{{ route('holidays.index') }}" class="collapse-item">Holidays</a>
+                   <a class="collapse-item" href="{{ route('tasks.index') }}">Work Report</a>
+                   <a href="{{ route('shifts.index') }}" class="collapse-item">Manage Shift</a>
+                   <a href="{{ route('holidays.index') }}" class="collapse-item">Manage Holidays</a>
                    <a href="{{route('leave.applied')}}" class="collapse-item" >Applied Leave</a>
-           
-                   <a href="{{ route('attendance.index') }}" class="collapse-item">Attendance Report</a>
-                  <a href="{{ route('leave-types.index') }}" class="collapse-item">Leave Type</a>
+                   <a href="{{ route('attendance.index') }}" class="collapse-item">Manage Attendance</a>
+                  <a href="{{ route('leave-types.index') }}" class="collapse-item">Manage Leave Type</a>
                </div>
            </div>
            <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
                <i class="fas fa-fw fa-donate"></i>
-               <span>Payrole Report</span>
+               <span>Payroll</span>
            </a>
            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">

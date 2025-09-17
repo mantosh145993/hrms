@@ -99,4 +99,18 @@ class LeaveTypeController extends Controller
         $leave->save();
         return response()->json(['message' => 'Leave status updated successfully!']);
     }
+
+    public function updateReason(Request $request)
+    {
+        $leave = Leave::find($request->id);
+
+        if (!$leave) {
+            return response()->json(['message' => 'Leave not found'], 404);
+        }
+
+        $leave->reason = $request->reason;
+        $leave->save();
+
+        return response()->json(['message' => 'Reason updated successfully!']);
+    }
 }
