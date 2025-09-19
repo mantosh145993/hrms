@@ -11,6 +11,7 @@
                     <thead class="table-success text-dark">
                         <tr>
                             <th>Date</th>
+                            <th>Day's</th>
                             <th>Title</th>
                             <th>Paid?</th>
                         </tr>
@@ -19,6 +20,7 @@
                         @foreach($holidays as $holiday)
                         <tr>
                             <td class="fw-semibold">{{ \Carbon\Carbon::parse($holiday->date)->format('d M Y (D)') }}</td>
+                            <td>{{$holiday->max_days }}</td>
                             <td class="text-capitalize">{{ $holiday->title }}</td>
                             <td>
                                 @if($holiday->is_paid)

@@ -29,7 +29,7 @@
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                <i class="fas fa-fw fa-cog"></i>
-               <span>Employee</span>
+               <span>Explore Menu</span>
            </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -68,7 +68,7 @@
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
                <i class="fas fa-fw fa-users"></i>
-               <span>All Menu</span>
+               <span>Explore Menu</span>
            </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -107,7 +107,7 @@
                data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                    <h6 class="collapse-header">Suggation Utilities:</h6>
-                   <a class="collapse-item" href="#">Create Suggation</a>
+                   <a class="collapse-item" href="#">Feedback</a>
                </div>
            </div>
        </li>

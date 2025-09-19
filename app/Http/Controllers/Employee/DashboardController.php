@@ -44,9 +44,14 @@ class DashboardController extends Controller
     // Assigned Task
     public function assignedTask()
     {
-        $tasks = Task::with('user')->latest()->paginate(10);
+        $tasks = Task::with('user')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
+
         return view('employee.assigned', compact('tasks'));
     }
+
     // Update status of Task 
     public function updateStatus(Request $request)
     {
