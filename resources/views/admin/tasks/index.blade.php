@@ -2,44 +2,71 @@
 
 @section('content')
 <div class="container">
-    <h1>Tasks</h1>
-    <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add new task</a>
+    <h2 class="mb-4">Add Feedback</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Assigned To</th>
-                <th>Status</th>
-                <th width="180">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($tasks as $task)
-                <tr>
-                    <td>{{ $task->title }}</td>
-                    <td>{{ Str::limit($task->description, 50) }}</td>
-                    <td>{{ $task->user?->name ?? 'Unassigned' }}</td>
-                    <td>{{ ucfirst($task->status) }}</td>
-                    <td>
-                        <a href="{{ route('tasks.edit', $task) }}" class="btn btn-warning btn-sm">Feedback</a>
-                        <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline">
-                            @csrf @method('DELETE')
-                            <button onclick="return confirm('Delete this task?')" class="btn btn-danger btn-sm">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr><td colspan="5">No tasks found</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+    <form action="{{ route('feedbacks.store') }}" method="POST">
+        @csrf
 
-    {{ $tasks->links() }}
+        <!-- Employee -->
+        <div class="mb-3">
+            <label for="employee_id" class="form-label">Employee</label>
+            <select name="employee_id" id="employee_id" class="form-select" required>
+                <option value="">Select Employee</option>
+                @foreach($employees as $employee)
+                    <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                        {{ $employee->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
+        </div>
+
+        <!-- Message -->
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea name="message" id="message" class="form-control" rows="4" required>{{ old('message') }}</textarea>
+        </div>
+
+        <!-- Type -->
+        <div class="mb-3">
+            <label for="type" class="form-label">Type</label>
+            <select name="type" id="type" class="form-select" required>
+                <option value="">Select Type</option>
+                <option value="positive" {{ old('type') == 'positive' ? 'selected' : '' }}>Positive</option>
+                <option value="negative" {{ old('type') == 'negative' ? 'selected' : '' }}>Negative</option>
+                <option value="neutral" {{ old('type') == 'neutral' ? 'selected' : '' }}>Neutral</option>
+            </select>
+        </div>
+
+        <!-- Given By -->
+        <div class="mb-3">
+            <label for="given_by" class="form-label">Given By (Manager/User)</label>
+            <select name="given_by" id="given_by" class="form-select">
+                <option value="">Select User</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ old('given_by') == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+    </form>
 </div>
 @endsection

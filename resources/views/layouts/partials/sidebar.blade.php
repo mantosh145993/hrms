@@ -23,13 +23,13 @@
        </div>
        <!-- Nav Item - Pages Collapse Menu -->
 
-        <!-- Admin Auth  -->
-       @if(Auth::user()->role == 'admin')   
+       <!-- Admin Auth -->
+       @if(Auth::user()->role == 'admin')
        <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-fw fa-cog"></i>
-               <span>Explore Menu</span>
+               <i class="fas fa-fw fa-cog" style="color: #ffff;"></i>
+               <span style="color: #ffff;">All Menu</span>
            </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -38,16 +38,15 @@
                    <a class="collapse-item" href="{{ route('tasks.index') }}">Work Report</a>
                    <a href="{{ route('shifts.index') }}" class="collapse-item">Manage Shift</a>
                    <a href="{{ route('holidays.index') }}" class="collapse-item">Manage Holidays</a>
-                   <a href="{{route('leave.applied')}}" class="collapse-item" >Applied Leave</a>
+                   <a href="{{route('leave.applied')}}" class="collapse-item">Applied Leave</a>
                    <a href="{{ route('attendance.index') }}" class="collapse-item">Manage Attendance</a>
-                  <a href="{{ route('leave-types.index') }}" class="collapse-item">Manage Leave Type</a>
+                   <a href="{{ route('leave-types.index') }}" class="collapse-item">Manage Leave Type</a>
                </div>
            </div>
-           <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-               <i class="fas fa-fw fa-donate"></i>
-               <span>Payroll</span>
+               <i class="fas fa-fw fa-donate" style="color: #ffff;"></i>
+               <span style="color: #ffff;">Payroll</span>
            </a>
            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
@@ -57,7 +56,18 @@
                    <a class="collapse-item" href="#">Salary Slip</a>
                </div>
            </div>
-       </li>
+           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rais-concern"
+               aria-expanded="true" aria-controls="rais-concern">
+               <i class="fas fa-fw fa-portrait" style="color: #ffff;"></i>
+               <span style="color: #ffff;">Feedback</span>
+           </a>
+           <div id="rais-concern" class="collapse" aria-labelledby="headingUtilities"
+               data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                   <h6 class="collapse-header">Suggation Utilities:</h6>
+                   <a class="collapse-item" href="{{ route('feedbacks.index') }}">Feedback</a>
+               </div>
+           </div>
        </li>
        @endif
        <!-- End Admin Auth  -->
@@ -67,8 +77,8 @@
        <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-fw fa-users"></i>
-               <span>Explore Menu</span>
+               <i class="fas fa-fw fa-users" style="color: #ffff;" ></i>
+               <span style="color: #ffff;">All Menu</span>
            </a>
            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -100,14 +110,14 @@
        <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rais-concern"
                aria-expanded="true" aria-controls="rais-concern">
-               <i class="fas fa-fw fa-portrait"></i>
-               <span>Feedback Box</span>
+               <i class="fas fa-fw fa-portrait" style="color: #ffff;"></i>
+               <span style="color: #ffff;">Feedback</span>
            </a>
            <div id="rais-concern" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                    <h6 class="collapse-header">Suggation Utilities:</h6>
-                   <a class="collapse-item" href="#">Feedback</a>
+                   <a class="collapse-item" href="{{ route('employee.feedback') }}">Feedback</a>
                </div>
            </div>
        </li>
@@ -115,8 +125,8 @@
        <li class="nav-item">
            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#month-star"
                aria-expanded="true" aria-controls="month-star">
-               <i class="fas fa-fw fa-balance-scale-right"></i>
-               <span>Bodmas Star</span>
+               <i class="fas fa-fw fa-balance-scale-right" style="color: #ffff;"></i>
+               <span style="color: #ffff;">Bodmas ★★★★☆</span>
            </a>
            <div id="month-star" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
@@ -134,7 +144,7 @@
 
        <!-- Admin Auth  -->
        @if(Auth::user()->role == 'admin')
-     
+
        <!-- <div class="sidebar-heading">
            Addons
        </div>

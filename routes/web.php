@@ -5,6 +5,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ReportController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\admin\FeedbackController;
 use App\Http\Controllers\Employee\DashboardController as EmployeeDashboard;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\UserController;
@@ -13,6 +14,10 @@ use App\Http\Controllers\Admin\ShiftController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 
+
+Route::get('gallery', function(){
+    return view('gallery');
+});
 
 // Login Root 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -35,6 +40,7 @@ Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/attendance/day/{date}', [AttendanceController::class, 'dayView']);
     Route::get('/attendance/month/{ym}', [AttendanceController::class, 'monthView']);
     Route::resource('leaves', LeaveController::class);
+    Route::get('employee/feedback',[ EmployeeDashboard::class,'employeeFeedback'] )->name('employee.feedback');
 });
 // End Employee Route
 // Admin Route
@@ -44,8 +50,9 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function () {
     Route::get('/attendances', [\App\Http\Controllers\Admin\AttendanceController::class, 'index']);
     Route::post('/attendances/{attendance}/update', [\App\Http\Controllers\Admin\AttendanceController::class, 'update']);
     Route::post('/recompute/{ym}', [\App\Http\Controllers\Admin\AttendanceController::class, 'recomputeMonth']);
-    Route::get('/reports/month/{ym}/export', [ReportController::class, 'exportMonth']);
+    // Route::get('/reports/month/{ym}/export', [ReportController::class, 'exportMonth']);
     Route::resource('/holidays', \App\Http\Controllers\Admin\HolidayController::class);
+    Route::resource('feedbacks', FeedbackController::class);
     Route::resource('users', UserController::class);
     Route::resource('holidays', \App\Http\Controllers\Admin\HolidayController::class);
     Route::resource('shifts', ShiftController::class);
