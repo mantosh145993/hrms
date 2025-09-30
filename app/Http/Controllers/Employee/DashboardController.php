@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\{Task, Holiday, Leave, LeaveType};
+use App\Models\{Feedback, Task, Holiday, Leave, LeaveType};
 use App\Helpers\TimeHelper;
 
 class DashboardController extends Controller
@@ -143,5 +143,16 @@ class DashboardController extends Controller
     {
         $holidays = Holiday::all();
         return view('employee.holiday', compact('holidays'));
+    }
+
+    public function employeeFeedback()
+    {
+        $userId = auth()->id(); // get logged-in user ID
+
+        $feedbacks = Feedback::with('employee')
+            ->where('employee_id', $userId) // only their feedbacks
+            ->get();
+
+        return view('employee.feedback', compact('feedbacks'));
     }
 }
