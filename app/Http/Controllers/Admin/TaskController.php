@@ -10,7 +10,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::with('user')->latest()->paginate(10);
-        return view('admin.tasks.index', compact('tasks'));
+        $employees = User::all();
+        return view('admin.tasks.index', compact('tasks','employees'));
     }
 
     public function create()
