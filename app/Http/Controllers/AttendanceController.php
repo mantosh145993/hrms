@@ -126,6 +126,22 @@ class AttendanceController extends Controller
         $endDate   = $request->input('end_date', now()->endOfMonth()->toDateString());
         // Total calendar days in range
         $totalDays = \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) + 1;
+        // $report = Attendance::select(
+        //     'user_id',
+        //     DB::raw("SUM(status = 'present') as present_count"),
+        //     DB::raw("SUM(status = 'half_day') as halfday_count"),
+        //     DB::raw("SUM(status = 'holiday') as holiday_count"),
+        //     DB::raw("SUM(status = 'sunday') as sunday_count"),
+        //     DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 1) as paid_leave_count"),
+        //     DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 0) as unpaid_leave_count")
+        // )
+        //     ->whereBetween('work_date', [$startDate, $endDate])
+        //      ->whereHas('user', function ($query) {
+        //         $query->where('role', 'employee');
+        //     })
+        //     ->groupBy('user_id')
+        //     ->with('user:id,name')
+        //     ->get();
         $report = Attendance::select(
             'user_id',
             DB::raw("SUM(status = 'present') as present_count"),
@@ -135,10 +151,12 @@ class AttendanceController extends Controller
             DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 1) as paid_leave_count"),
             DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 0) as unpaid_leave_count")
         )
-            ->whereBetween('work_date', [$startDate, $endDate])
-            ->groupBy('user_id')
-            ->with('user:id,name')
-            ->get();
+        ->whereBetween('work_date', [$startDate, $endDate])
+        ->whereHas('user', fn($q) => $q->where('role', 'employee'))
+        ->groupBy('user_id')
+        ->with('user:id,name')
+        ->get();
+
         foreach ($report as $row) {
             $row->total_days = $totalDays;
             $row->absent_count = $totalDays - (
