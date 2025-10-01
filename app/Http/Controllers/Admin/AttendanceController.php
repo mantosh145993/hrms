@@ -19,7 +19,6 @@ class AttendanceController extends Controller
         $lateTop = Attendance::where('work_date', $today)->orderByDesc('late_minutes')->take(10)->get(['user_id', 'late_minutes']);
         return view('admin.dashboard', compact('present', 'absent', 'lateTop'));
     }
-
     // public function index(Request $request)
     // {
     //     $query = Attendance::with('user')->orderByDesc('work_date');
@@ -34,7 +33,6 @@ class AttendanceController extends Controller
 
     //     return view('admin.attendance.index');
     // }
-
     public function index(Request $request)
     {
         $users = User::orderBy('name')->get();
@@ -56,31 +54,23 @@ class AttendanceController extends Controller
         $attendances = $attendances->paginate(25)->withQueryString();
         return view('admin.attendance.index', compact('attendances', 'users'));
     }
-
     public function export(Request $request)
     {
         $filters = $request->only(['user_id', 'from', 'to']);
         $fileName = 'Attendance_Report_' . date('Y_m_d_H_i_s') . '.xlsx';
         return Excel::download(new AttendancesExport($filters), $fileName);
     }
-
     public function getData(Request $request)
     {
         $query = Attendance::with('user');
-
-        // Filter by employee
         if ($request->has('user_id') && $request->user_id != '') {
             $query->where('user_id', $request->user_id);
         }
-
-        // Filter by date range
         if ($request->has('from_date') && $request->has('to_date')) {
             $query->whereBetween('date', [$request->from_date, $request->to_date]);
         }
-
         return datatables()->of($query)->make(true);
     }
-
     public function update(Request $request, Attendance $attendance)
     {
         $validated = $request->validate([
@@ -107,7 +97,6 @@ class AttendanceController extends Controller
 
         return back()->with('success', 'Attendance updated.');
     }
-
     public function recomputeMonth(string $ym)
     {
         [$y, $m] = explode('-', $ym);
