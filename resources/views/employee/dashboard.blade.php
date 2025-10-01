@@ -11,9 +11,20 @@
     }
 
     @keyframes pulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.8; }
-        100% { transform: scale(1); opacity: 1; }
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 
     /* Card Hover Animation */
@@ -24,7 +35,7 @@
 
     .card-hover:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     /* Gradient Headers */
@@ -45,8 +56,9 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        top: 0; left: -100%;
-        background: rgba(255,255,255,0.3);
+        top: 0;
+        left: -100%;
+        background: rgba(255, 255, 255, 0.3);
         transition: all 0.5s;
     }
 
@@ -72,23 +84,23 @@
                 <div class="card-body text-center">
                     <h6 class="text-success mb-2">✅ Check In</h6>
                     @if(!$canCheckInOut)
-                        @if($onLeave)
-                            <p class="text-muted">🌴 On Leave Today</p>
-                        @elseif($isHoliday)
-                            <p class="text-muted">🎉 Holiday</p>
-                        @elseif($isSunday)
-                            <p class="text-muted">☀️ Sunday</p>
-                        @endif
+                    @if($onLeave)
+                    <p class="text-muted">🌴 On Leave Today</p>
+                    @elseif($isHoliday)
+                    <p class="text-muted">🎉 Holiday</p>
+                    @elseif($isSunday)
+                    <p class="text-muted">☀️ Sunday</p>
+                    @endif
                     @else
-                        @if(!$attendance || !$attendance?->check_in_at)
-                            <form action="{{ route('attendance.checkIn') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success btn-animated">Check In</button>
-                            </form>
-                        @else
-                            <p class="text-muted">Checked in at:</p>
-                            <div class="fw-bold text-success">{{ $attendance->check_in_at->format('H:i') }}</div>
-                        @endif
+                    @if(!$attendance || !$attendance?->check_in_at)
+                    <form action="{{ route('attendance.checkIn') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-animated">Check In</button>
+                    </form>
+                    @else
+                    <p class="text-muted">Checked in at:</p>
+                    <div class="fw-bold text-success">{{ $attendance->check_in_at->format('H:i') }}</div>
+                    @endif
                     @endif
                 </div>
             </div>
@@ -100,25 +112,30 @@
                 <div class="card-body text-center">
                     <h6 class="text-danger mb-2">⏹ Check Out</h6>
                     @if(!$canCheckInOut)
-                        @if($onLeave)
-                            <p class="text-muted">🌴 On Leave Today</p>
-                        @elseif($isHoliday)
-                            <p class="text-muted">🎉 Holiday</p>
-                        @elseif($isSunday)
-                            <p class="text-muted">☀️ Sunday</p>
-                        @endif
+                    @if($onLeave)
+                    <p class="text-muted">🌴 On Leave Today</p>
+                    @elseif($isHoliday)
+                    <p class="text-muted">🎉 Holiday</p>
+                    @elseif($isSunday)
+                    <p class="text-muted">☀️ Sunday</p>
+                    @endif
                     @else
-                        @if($attendance && !$attendance->check_out_at)
-                            <form action="{{ route('attendance.checkOut') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-animated">Check Out</button>
-                            </form>
-                        @elseif($attendance && $attendance->check_out_at)
-                            <p class="text-muted">Checked out at:</p>
-                            <div class="fw-bold text-danger">{{ $attendance->check_out_at->format('H:i') }}</div>
-                        @else
-                            <p class="text-muted">Not checked in yet</p>
-                        @endif
+                    @if($attendance && !$attendance->check_out_at)
+                    <form action="{{ route('attendance.checkOut') }}" method="POST">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-animated"
+                            onclick="return confirm('Is Shift over? Are you sure you want to Check Out?');">
+                            Check Out
+                        </button>
+                    </form>
+                    @elseif($attendance && $attendance->check_out_at)
+                    <p class="text-muted">Checked out at:</p>
+                    <div class="fw-bold text-danger">{{ $attendance->check_out_at->format('H:i') }}</div>
+                    @else
+                    <p class="text-muted">Not checked in yet</p>
+                    @endif
                     @endif
                 </div>
             </div>
@@ -149,20 +166,20 @@
                     </thead>
                     <tbody>
                         @if($attendance)
-                            <tr>
-                                <td class="fw-bold text-dark">{{ Auth::user()->name }}</td>
-                                <td>{{ $attendance->work_date->format('d M Y') }}</td>
-                                <td class="text-success fw-bold">{{ $attendance->check_in_at?->format('H:i') ?? '-' }}</td>
-                                <td class="text-danger fw-bold">{{ $attendance->check_out_at?->format('H:i') ?? '-' }}</td>
-                                <td class="fw-bold text-primary">{{ $attendance->worked_time ?? '0h 0m' }}</td>
-                                <td class="fw-bold text-success">{{ $attendance->overtime ?? '0h 0m' }}</td>
-                                <td class="fw-bold text-warning">{{ $attendance->late_time ?? '0h 0m' }}</td>
-                                <td class="fw-bold text-success" >{{$attendance->status }}</td>
-                            </tr>
+                        <tr>
+                            <td class="fw-bold text-dark">{{ Auth::user()->name }}</td>
+                            <td>{{ $attendance->work_date->format('d M Y') }}</td>
+                            <td class="text-success fw-bold">{{ $attendance->check_in_at?->format('H:i') ?? '-' }}</td>
+                            <td class="text-danger fw-bold">{{ $attendance->check_out_at?->format('H:i') ?? '-' }}</td>
+                            <td class="fw-bold text-primary">{{ $attendance->worked_time ?? '0h 0m' }}</td>
+                            <td class="fw-bold text-success">{{ $attendance->overtime ?? '0h 0m' }}</td>
+                            <td class="fw-bold text-warning">{{ $attendance->late_time ?? '0h 0m' }}</td>
+                            <td class="fw-bold text-success">{{$attendance->status }}</td>
+                        </tr>
                         @else
-                            <tr>
-                                <td colspan="7" class="text-muted py-3">😔 No attendance marked today</td>
-                            </tr>
+                        <tr>
+                            <td colspan="7" class="text-muted py-3">😔 No attendance marked today</td>
+                        </tr>
                         @endif
                     </tbody>
                 </table>
@@ -175,7 +192,11 @@
     function updateClock() {
         let now = new Date();
         document.getElementById('clock').innerText =
-            now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+            now.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
     }
     setInterval(updateClock, 1000);
     updateClock();

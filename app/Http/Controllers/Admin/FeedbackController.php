@@ -69,8 +69,6 @@ class FeedbackController extends Controller
 
         return view('admin.feedback.edit', compact('feedback', 'employees'));
     }
-
-
     /**
      * Update the specified resource in storage.
      */

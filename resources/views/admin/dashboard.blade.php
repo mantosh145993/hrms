@@ -21,7 +21,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Employees
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalEmployees }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalEmployees -1 }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fab fa-black-tie fa-2x text-gray-300"></i>
