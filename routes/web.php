@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\ShiftController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 
-
+// Test URL 
 Route::get('gallery', function(){
     return view('gallery');
 });
@@ -30,6 +30,8 @@ Route::get('/', function () {
 // Employee Route
 Route::middleware(['auth','role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeDashboard::class, 'index'])->name('employee.dashboard');
+    Route::get('/profile/show', [EmployeeDashboard::class, 'profileUpdateShow'])->name('profile.show');
+    Route::put('/profile/update/{id}', [EmployeeDashboard::class, 'profileUpdate'])->name('profile.update');
     Route::get('/employee/assigned-task', [EmployeeDashboard::class, 'assignedTask'])->name('employee.assigned');
     Route::post('/tasks/update-status', [EmployeeDashboard::class, 'updateStatus'])->name('tasks.updateStatus');
     Route::get('/employee/attendance', [EmployeeDashboard::class, 'attendance'])->name('employee.attendance');
@@ -52,7 +54,7 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function () {
     Route::post('/recompute/{ym}', [\App\Http\Controllers\Admin\AttendanceController::class, 'recomputeMonth']);
     // Route::get('/reports/month/{ym}/export', [ReportController::class, 'exportMonth']);
     Route::resource('/holidays', \App\Http\Controllers\Admin\HolidayController::class);
-    Route::resource('feedbacks', FeedbackController::class);
+    Route::resource('feedbacks', \App\Http\Controllers\Admin\FeedbackController::class);
     Route::resource('users', UserController::class);
     Route::resource('holidays', \App\Http\Controllers\Admin\HolidayController::class);
     Route::resource('shifts', ShiftController::class);

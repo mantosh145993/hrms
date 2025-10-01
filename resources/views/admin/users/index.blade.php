@@ -64,9 +64,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $index = 1 ; ?>
                         @foreach($users as $user)
                         <tr>
-                            <td class="fw-semibold text-dark">{{ $user->id }}</td>
+                            <td class="fw-semibold text-dark">{{ $index++}}</td>
                             <td>{{ $user->name }}</td>
                             <td class="text-muted">{{ $user->email }}</td>
                             <td>

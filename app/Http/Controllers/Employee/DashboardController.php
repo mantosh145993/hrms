@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\{Feedback, Task, Holiday, Leave, LeaveType};
+use App\Models\{Feedback, Task, Holiday, Leave, LeaveType, User};
 use App\Helpers\TimeHelper;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -51,7 +52,6 @@ class DashboardController extends Controller
 
         return view('employee.assigned', compact('tasks'));
     }
-
     // Update status of Task 
     public function updateStatus(Request $request)
     {
@@ -61,39 +61,6 @@ class DashboardController extends Controller
         return response()->json(['message' => 'Task status updated successfully!']);
     }
     // Employee Attandance 
-    // public function attendance()
-    // {
-    //     // All attendance records (paginated) with user relation
-    //     $employee = Attendance::with('user')
-    //         ->orderBy('created_at', 'desc')
-    //         ->paginate(10);
-
-    //     // --- Total late time for the logged-in user ---
-    //     $records = Attendance::where('user_id', Auth::id())
-    //         ->whereNotNull('check_in_at')
-    //         ->get(['work_date', 'check_in_at']);
-
-    //     $totalSeconds = 0;
-
-    //     foreach ($records as $rec) {
-    //         $checkIn = Carbon::parse($rec->check_in_at);
-
-    //         // Anchor shift start (10 AM) to record’s date
-    //         $shiftStart = $rec->work_date
-    //             ? Carbon::parse($rec->work_date)->setTime(10, 0, 0)
-    //             : $checkIn->copy()->setTime(10, 0, 0);
-
-    //         if ($checkIn->gt($shiftStart)) {
-    //             $totalSeconds += $shiftStart->diffInSeconds($checkIn);
-    //         }
-    //     }
-
-    //     $totalLateTime = $totalSeconds > 0
-    //         ? TimeHelper::formatSeconds($totalSeconds)
-    //         : "0h 0m 0s";
-
-    //     return view('employee.attendance', compact('employee', 'totalLateTime'));
-    // }
     public function attendance()
     {
         $user = Auth::user();
@@ -144,7 +111,7 @@ class DashboardController extends Controller
         $holidays = Holiday::all();
         return view('employee.holiday', compact('holidays'));
     }
-
+    // Employee Feedback
     public function employeeFeedback()
     {
         $userId = auth()->id(); // get logged-in user ID
@@ -154,5 +121,28 @@ class DashboardController extends Controller
             ->get();
 
         return view('employee.feedback', compact('feedbacks'));
+    }
+    // Show Profile
+    public function profileUpdateShow()
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        return view('auth.edit', compact('user'));
+    }
+    // Update Profile 
+    public function profileUpdate(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required',
+            'password' => 'nullable|string|min:8|',
+        ]);
+        $data = $request->only(['name', 'email']);
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $user->update($data);
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }
 }
