@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{Attendance, Holiday, Payroll, Shift, User};
@@ -36,7 +38,12 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         $users = User::orderBy('name')->get();
-        $attendances = Attendance::with('user')->orderBy('work_date', 'desc');
+        $attendances = Attendance::with('user')
+            ->whereHas('user', function ($query) {
+                $query->where('role', 'employee');
+            })
+            ->orderBy('work_date', 'desc');
+
         if ($request->filled('user_id')) {
             $attendances->where('user_id', $request->user_id);
         }
@@ -46,7 +53,7 @@ class AttendanceController extends Controller
         if ($request->filled('to')) {
             $attendances->whereDate('work_date', '<=', $request->to);
         }
-        $attendances = $attendances->paginate(10)->withQueryString();
+        $attendances = $attendances->paginate(25)->withQueryString();
         return view('admin.attendance.index', compact('attendances', 'users'));
     }
 
