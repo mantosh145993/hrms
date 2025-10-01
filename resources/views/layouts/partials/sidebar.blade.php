@@ -35,7 +35,7 @@
                <div class="bg-white py-2 collapse-inner rounded">
                    <h6 class="collapse-header">Manage Components:</h6>
                    <a href="{{ route('users.index') }}" class="collapse-item">Employees</a>
-                   <a class="collapse-item" href="{{ route('tasks.index') }}">Work Report</a>
+                   <a class="collapse-item" href="#">Work Report</a>
                    <a href="{{ route('shifts.index') }}" class="collapse-item">Manage Shift</a>
                    <a href="{{ route('holidays.index') }}" class="collapse-item">Manage Holidays</a>
                    <a href="{{route('leave.applied')}}" class="collapse-item">Applied Leave</a>
