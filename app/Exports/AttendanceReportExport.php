@@ -31,6 +31,7 @@ class AttendanceReportExport implements FromView
                 DB::raw("SUM(CASE WHEN status = 'absent' THEN 1 ELSE 0 END) as absent_count")
             )
             ->whereBetween('work_date', [$this->startDate, $this->endDate])
+            ->whereHas('user', fn($q) => $q->where('role', 'employee'))
             ->groupBy('user_id')
             ->with('user:id,name')
             ->get();
