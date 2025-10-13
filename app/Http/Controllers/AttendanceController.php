@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\{Attendance, Holiday, Payroll, Shift, User};
 use Carbon\Carbon;
@@ -120,12 +122,50 @@ class AttendanceController extends Controller
         ];
         return response()->json(['data' => $data, 'stats' => $stats]);
     }
+    public function attendanceReport(Request $request)
+    {
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate   = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $totalDays = \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) + 1;
+        $report = Attendance::select(
+            'user_id',
+            DB::raw("SUM(status = 'present') as present_count"),
+            DB::raw("SUM(status = 'half_day') as halfday_count"),
+            DB::raw("SUM(status = 'holiday') as holiday_count"),
+            DB::raw("SUM(status = 'sunday') as sunday_count"),
+            DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 1) as paid_leave_count"),
+            DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 0) as unpaid_leave_count")
+        )
+        ->whereBetween('work_date', [$startDate, $endDate])
+        ->whereHas('user', fn($q) => $q->where('role', 'employee'))
+        ->groupBy('user_id')
+        ->with('user:id,name')
+        ->get();
+
+        foreach ($report as $row) {
+            $row->total_days = $totalDays;
+            $row->absent_count = $totalDays - (
+                $row->present_count +
+                $row->halfday_count +
+                $row->holiday_count +
+                $row->sunday_count +
+                $row->paid_leave_count +
+                $row->unpaid_leave_count
+            );
+        }
+        return view('reports.attendance', compact('report', 'startDate', 'endDate'));
+    }
+
     // public function attendanceReport(Request $request)
     // {
-    //     $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-    //     $endDate   = $request->input('end_date', now()->endOfMonth()->toDateString());
-    //     $totalDays = \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) + 1;
-    //     $report = Attendance::select(
+    //     $month = $request->input('month', now()->month);
+    //     $year  = $request->input('year', now()->year);
+    //     $employeeId = $request->input('employee_id');
+    //     $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->toDateString();
+    //     $endDate   = Carbon::createFromDate($year, $month, 1)->endOfMonth()->toDateString();
+    //     $totalDays = Carbon::createFromDate($year, $month, 1)->daysInMonth;
+
+    //     $query = Attendance::select(
     //         'user_id',
     //         DB::raw("SUM(status = 'present') as present_count"),
     //         DB::raw("SUM(status = 'half_day') as halfday_count"),
@@ -134,12 +174,14 @@ class AttendanceController extends Controller
     //         DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 1) as paid_leave_count"),
     //         DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 0) as unpaid_leave_count")
     //     )
-    //     ->whereBetween('work_date', [$startDate, $endDate])
-    //     ->whereHas('user', fn($q) => $q->where('role', 'employee'))
-    //     ->groupBy('user_id')
-    //     ->with('user:id,name')
-    //     ->get();
-
+    //         ->whereBetween('work_date', [$startDate, $endDate])
+    //         ->whereHas('user', fn($q) => $q->where('role', 'employee'));
+    //     if ($employeeId) {
+    //         $query->where('user_id', $employeeId);
+    //     }
+    //     $report = $query->groupBy('user_id')
+    //         ->with('user:id,name')
+    //         ->get();
     //     foreach ($report as $row) {
     //         $row->total_days = $totalDays;
     //         $row->absent_count = $totalDays - (
@@ -151,67 +193,26 @@ class AttendanceController extends Controller
     //             $row->unpaid_leave_count
     //         );
     //     }
-    //     return view('reports.attendance', compact('report', 'startDate', 'endDate'));
+
+    //     $months = [
+    //         1 => 'January',
+    //         2 => 'February',
+    //         3 => 'March',
+    //         4 => 'April',
+    //         5 => 'May',
+    //         6 => 'June',
+    //         7 => 'July',
+    //         8 => 'August',
+    //         9 => 'September',
+    //         10 => 'October',
+    //         11 => 'November',
+    //         12 => 'December'
+    //     ];
+    //     $years = range(now()->year - 2, now()->year + 1);
+    //     $employees = User::where('role', 'employee')->select('id', 'name')->get();
+
+    //     return view('reports.attendance', compact('report', 'month', 'year', 'months', 'years', 'employees', 'employeeId'));
     // }
-
-    public function attendanceReport(Request $request)
-{
-    // --- Filters ---
-    $month = $request->input('month', now()->month);
-    $year  = $request->input('year', now()->year);
-    $employeeId = $request->input('employee_id');
-
-    // --- Date Range ---
-    $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth()->toDateString();
-    $endDate   = Carbon::createFromDate($year, $month, 1)->endOfMonth()->toDateString();
-    $totalDays = Carbon::createFromDate($year, $month, 1)->daysInMonth;
-
-    // --- Base Query ---
-    $query = Attendance::select(
-        'user_id',
-        DB::raw("SUM(status = 'present') as present_count"),
-        DB::raw("SUM(status = 'half_day') as halfday_count"),
-        DB::raw("SUM(status = 'holiday') as holiday_count"),
-        DB::raw("SUM(status = 'sunday') as sunday_count"),
-        DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 1) as paid_leave_count"),
-        DB::raw("SUM(status = 'on_leave' AND is_paid_leave = 0) as unpaid_leave_count")
-    )
-    ->whereBetween('work_date', [$startDate, $endDate])
-    ->whereHas('user', fn($q) => $q->where('role', 'employee'));
-
-    // --- Optional employee filter ---
-    if ($employeeId) {
-        $query->where('user_id', $employeeId);
-    }
-
-    $report = $query->groupBy('user_id')
-        ->with('user:id,name')
-        ->get();
-
-    // --- Calculated Fields ---
-    foreach ($report as $row) {
-        $row->total_days = $totalDays;
-        $row->absent_count = $totalDays - (
-            $row->present_count +
-            $row->halfday_count +
-            $row->holiday_count +
-            $row->sunday_count +
-            $row->paid_leave_count +
-            $row->unpaid_leave_count
-        );
-    }
-
-    // --- Dropdown Data ---
-    $months = [
-        1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
-        5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
-        9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
-    ];
-    $years = range(now()->year - 2, now()->year + 1);
-    $employees = User::where('role', 'employee')->select('id', 'name')->get();
-
-    return view('reports.attendance', compact('report', 'month', 'year', 'months', 'years', 'employees', 'employeeId'));
-}
     public function exportAttendanceReport(Request $request)
     {
         $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
