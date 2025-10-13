@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Employee;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
@@ -127,7 +125,7 @@ class DashboardController extends Controller
     {
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
-        return view('auth.edit', compact('user'));
+        return view('Auth.edit', compact('user'));
     }
     // Update Profile 
     public function profileUpdate(Request $request, $id)
