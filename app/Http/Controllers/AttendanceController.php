@@ -185,14 +185,8 @@ class AttendanceController extends Controller
             ->get();
         foreach ($report as $row) {
             $row->total_days = $totalDays;
-            $row->absent_count = $totalDays - (
-                $row->present_count +
-                $row->halfday_count +
-                $row->holiday_count +
-                $row->sunday_count +
-                $row->paid_leave_count +
-                $row->unpaid_leave_count
-            );
+            $row->absent_count = $row->absent_count ?? 0;
+            
         }
 
         $months = [
