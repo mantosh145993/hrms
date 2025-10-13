@@ -9,9 +9,10 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::with('user')->latest()->paginate(10);
+        $task = Task::with('user')->latest()->paginate(10);
         $employees = User::all();
-        return view('admin.tasks.index', compact('tasks','employees'));
+        $users = User::all();
+        return view('admin.tasks.index', compact('task','employees','users'));
     }
 
     public function create()
@@ -26,7 +27,7 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'nullable',
             'user_id' => 'nullable|exists:users,id',
-            'status' => 'required|in:pending,in-progress,completed',
+            // 'status' => 'required|in:pending,in-progress,completed',
         ]);
 
         Task::create($request->all());
