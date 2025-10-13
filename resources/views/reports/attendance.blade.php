@@ -49,7 +49,6 @@
             <th>Sunday</th>
             <th>Paid Leave</th>
             <th>Unpaid Leave</th>
-            <th>Remain Days</th>
         </tr>
     </thead>
     <tbody>
@@ -64,7 +63,6 @@
                 <td>{{ $row->sunday_count }}</td>
                 <td>{{ $row->paid_leave_count }}</td>
                 <td>{{ $row->unpaid_leave_count }}</td>
-                <td>{{ $row->absent_count }}</td>
             </tr>
         @empty
             <tr><td colspan="9" class="text-center">No records found</td></tr>
