@@ -14,4 +14,8 @@ class LeaveType extends Model
         'max_days',
         'paid_status'
     ];
+
+    public function Leave(){
+        return $this->hasMany(Leave::class,'type,id');
+    }
 }

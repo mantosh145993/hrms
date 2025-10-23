@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = ['name', 'email', 'role', 'password'];
+    protected $fillable = ['name', 'email', 'role', 'password', 'doj', 'doc','dob','designation','duration'];
 
     public function tasks()
     {
@@ -57,9 +58,32 @@ class User extends Authenticatable
     {
         return $this->hasOne(Attendance::class)->whereDate('work_date', now()->toDateString());
     }
-    
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(Feedback::class);
     }
 
+    protected static function booted()
+    {
+        static::saving(function ($user) {
+            if ($user->doj && $user->doc) {
+                $doj = \Carbon\Carbon::parse($user->doj);
+                $doc = \Carbon\Carbon::parse($user->doc);
+
+                $years = $doj->diffInYears($doc);
+                $months = $doj->diffInMonths($doc) - ($years * 12);
+
+                $duration = '';
+                if ($years > 0) {
+                    $duration .= $years . ' Year' . ($years > 1 ? 's ' : ' ');
+                }
+                if ($months > 0) {
+                    $duration .= $months . ' Month' . ($months > 1 ? 's' : '');
+                }
+
+                $user->duration = $duration ?: 'Less than 1 Month';
+            }
+        });
+    }
 }

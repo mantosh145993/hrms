@@ -16,7 +16,7 @@ class LeaveController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $leaves = Leave::where('user_id', $user_id)->get();
+        $leaves = Leave::with('LeaveType')->where('user_id', $user_id)->get();
         $leaveTypes = LeaveType::all();
         return view("employee.applyLeave", compact('leaveTypes', 'leaves'));
     }
@@ -46,6 +46,29 @@ class LeaveController extends Controller
         return redirect()->route('leaves.index')->with('success', 'Leave applied successfully.');
     }
 
+    public function updateField(Request $request, $id)
+    {
+        $leave = Leave::findOrFail($id);
+
+        // Update only allowed fields
+        $allowedFields = ['start_date', 'end_date', 'reason', 'status', 'is_paid_leave'];
+
+        foreach ($request->all() as $field => $value) {
+            if (in_array($field, $allowedFields)) {
+                $leave->$field = $value;
+            }
+        }
+
+        $leave->save();
+
+        // Optional reload after approval (to lock editing)
+        $reload = $request->has('status') && $request->status === 'approved';
+
+        return response()->json([
+            'message' => 'Leave updated successfully!',
+            'reload' => $reload
+        ]);
+    }
 
     /**
      * Display the specified resource.

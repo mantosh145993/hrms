@@ -22,6 +22,9 @@ class UserController extends Controller {
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required|min:6',
+            'doj' => 'required',
+            'dob' => 'required',
+            'designation' => 'required',
             'role' => 'required'
         ]);
 
@@ -29,7 +32,10 @@ class UserController extends Controller {
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'role' => $request->role,
+            'doj' => $request->doj,
+            'dob'=> $request->dob,
+            'designation' => $request->designation
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created.');
@@ -43,15 +49,17 @@ class UserController extends Controller {
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$user->id,
-            'role' => 'required'
+            'role' => 'required',
+            'doc' => '',
+            'doj' => '',
+            'dob' => '',
+            'designation' => '',
         ]);
-
-        $data = $request->only(['name','email','role']);
+        $data = $request->only(['name','email','role','doc','doj','dob','designation']);
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
         $user->update($data);
-
         return redirect()->route('users.index')->with('success', 'User updated.');
     }
 

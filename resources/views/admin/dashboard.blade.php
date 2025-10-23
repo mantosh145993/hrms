@@ -101,33 +101,75 @@
 
     <div class="row">
         <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Employee Task Overview</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
+            <div class="card shadow mb-4 bg-dark text-white">
+                <div class="card-header d-flex justify-content-between align-items-center border-0">
+                    <h6 class="m-0 font-weight-bold text-light">Employee Overview</h6>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+
+                <div class="card-body p-3">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover table-striped align-middle text-center rounded">
+                            <thead class="bg-gradient">
+                                <tr class="text-uppercase text-white">
+                                    <th>Employee</th>
+                                    <th>(DOJ)</th>
+                                    <th>(DOC)</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($employees as $employee)
+                                @php
+                                $doj = $employee->doj ? \Carbon\Carbon::parse($employee->doj) : null;
+                                $now = \Carbon\Carbon::now();
+                                if ($doj) {
+                                $years = (int) $doj->diffInYears($now);
+                                $months = (int) ($doj->diffInMonths($now) - ($years * 12));
+                                } else {
+                                $years = 0;
+                                $months = 0;
+                                }
+                                @endphp
+                                <tr>
+                                    <td class="fw-semibold">{{ $employee->name }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ $doj ? $doj->format('d M, Y') : 'N/A' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($employee->doc)
+                                        <span class="badge bg-success">
+                                            {{ \Carbon\Carbon::parse($employee->doc)->format('d M, Y') }}
+                                        </span>
+                                        @else
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info text-white">
+                                            @if($years > 0)
+                                            {{ $years }} Year{{ $years > 1 ? 's' : '' }}
+                                            @endif
+                                            @if($months > 0)
+                                            {{ $months }} Month{{ $months > 1 ? 's' : '' }}
+                                            @endif
+                                            @if($years == 0 && $months == 0)
+                                            Less than 1 Month
+                                            @endif
+                                        </span>
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
         <!-- Pie Chart -->
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">

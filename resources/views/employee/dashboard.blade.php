@@ -69,16 +69,12 @@
 
 <div class="container my-4">
     <h4 class="text-center mb-4">🌟 Welcome, {{ Auth::user()->name }}</h4>
-
-    {{-- Live Clock --}}
     <div class="text-center mb-4">
         <small class="text-muted">🕒 Current Time</small>
         <div id="clock"></div>
     </div>
-
-    {{-- Attendance Actions --}}
+    <!-- In Out Attendance  -->
     <div class="row g-4 mb-4">
-        {{-- ✅ Check In --}}
         <div class="col-md-6">
             <div class="card card-hover border-0 shadow">
                 <div class="card-body text-center">
@@ -106,7 +102,6 @@
             </div>
         </div>
 
-        {{-- ✅ Check Out --}}
         <div class="col-md-6">
             <div class="card card-hover border-0 shadow">
                 <div class="card-body text-center">
@@ -141,8 +136,53 @@
             </div>
         </div>
     </div>
+    <div class="card shadow mb-4">
+      <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center">Employee Overview</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employee</th>
+                        <th>Designation</th>
+                        <th>DOJ</th>
+                        <th>DOC</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-semibold">{{ $attendance->user->name ?? 'N/A' }}</td>
+                        <td class="fw-semibold">{{ $attendance->user->designation ?? 'N/A' }}</td>
+                        <td>
+                            <span class="badge bg-primary text-white">
+                                {{ $attendance->user->doj ? \Carbon\Carbon::parse($attendance->user->doj ?? 'N/A')->format('d M, Y') : 'N/A' }}
+                            </span>
+                        </td>
+                        <td>
+                            @if($attendance->user->doc)
+                                <span class="badge bg-success">
+                                    {{ \Carbon\Carbon::parse($attendance->user->doc ?? 'N/A')->format('d M, Y') }}
+                                </span>
+                            @else
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="badge bg-info text-white">{{ $duration ?? 'N/A' }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-    {{-- Attendance Table --}}
+    </div>
+   <!-- End Out  -->
     <div class="card border-0 shadow">
         <div class="card-header gradient-header d-flex justify-content-between align-items-center">
             <span class="fw-semibold"><i class="bi bi-calendar-check me-2"></i>Today's Attendance</span>
@@ -155,6 +195,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>👨‍💼 Employee</th>
+                            <th>DOJ</th>
                             <th>📅 Date</th>
                             <th>⏰ Check In</th>
                             <th>⏳ Check Out</th>
@@ -168,6 +209,7 @@
                         @if($attendance)
                         <tr>
                             <td class="fw-bold text-dark">{{ Auth::user()->name }}</td>
+                            <td> {{ $attendance->user->doj ? \Carbon\Carbon::parse($attendance->user->doj)->format('d-M-Y') : '-' }}</td>
                             <td>{{ $attendance->work_date->format('d M Y') }}</td>
                             <td class="text-success fw-bold">{{ $attendance->check_in_at?->format('H:i') ?? '-' }}</td>
                             <td class="text-danger fw-bold">{{ $attendance->check_out_at?->format('H:i') ?? '-' }}</td>
@@ -201,9 +243,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 </script>
-
-
-{{-- Optional: Add some animation using CSS --}}
 <style>
     #clock {
         color: #0d5ef4;
@@ -233,5 +272,4 @@
         transform: scale(1.02);
     }
 </style>
-
 @endsection

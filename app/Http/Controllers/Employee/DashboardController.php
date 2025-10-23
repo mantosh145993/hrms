@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Employee;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
@@ -9,12 +11,33 @@ use App\Models\{Feedback, Task, Holiday, Leave, LeaveType, User};
 use App\Helpers\TimeHelper;
 use Illuminate\Support\Facades\Hash;
 
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $today = Carbon::today()->toDateString();
         $user = Auth::user();
+        // Calculate duration from DOJ to now
+        $doj = $user->doj ? Carbon::parse($user->doj) : null;
+        $now = Carbon::now();
+
+        if ($doj) {
+            $years = (int) $doj->diffInYears($now);
+            $months = (int) ($doj->diffInMonths($now) - ($years * 12));
+            $duration = '';
+            if ($years > 0) {
+                $duration .= $years . ' Year' . ($years > 1 ? 's ' : ' ');
+            }
+            if ($months > 0) {
+                $duration .= $months . ' Month' . ($months > 1 ? 's' : '');
+            }
+            if ($duration === '') {
+                $duration = 'Less than 1 Month';
+            }
+        } else {
+            $duration = 'N/A';
+        }
+        $today = Carbon::today()->toDateString();
         // check if today is holiday or Sunday
         $isSunday = Carbon::today()->isSunday();
         $isHoliday = Holiday::whereDate('date', '<=', $today)
@@ -35,10 +58,9 @@ class DashboardController extends Controller
                 ->whereDate('work_date', $today)
                 ->first();
         } else {
-            // user cannot check in/out today
             $canCheckInOut = false;
         }
-        return view('employee.dashboard', compact('attendance', 'canCheckInOut', 'isSunday', 'isHoliday', 'onLeave'));
+        return view('employee.dashboard', compact('attendance', 'canCheckInOut', 'isSunday', 'isHoliday', 'onLeave','duration'));
     }
     // Assigned Task
     public function assignedTask()
