@@ -83,7 +83,7 @@ class LeaveTypeController extends Controller
 
     public function getAppliedLeave()
     {
-        $leaves = Leave::with('user')->get();
+        $leaves = Leave::with('user','LeaveType')->get();
         return view('admin.leaves.index', compact('leaves'));
     }
 

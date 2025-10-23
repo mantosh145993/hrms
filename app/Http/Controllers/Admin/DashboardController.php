@@ -12,16 +12,15 @@ class DashboardController extends Controller
         $totalTasks = Task::count();
         $completedTasks = Task::where('status', 'pending')->count();
         $pendingLeaves = Leave::where('status', 'pending')->count();
-
-        // Calculate task completion percentage
         $taskPercentage = $totalTasks ? ($completedTasks / $totalTasks) * 100 : 0;
-
+        $employees = User::all();
         return view('admin.dashboard', compact(
             'totalEmployees',
             'totalHolidays',
             'totalTasks',
             'taskPercentage',
-            'pendingLeaves'
+            'pendingLeaves',
+            'employees'
         ));
     }
 }

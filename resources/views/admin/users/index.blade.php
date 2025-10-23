@@ -56,18 +56,21 @@
                 <table class="table table-hover align-middle text-center mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                          
                             <th>👨‍💼 Name</th>
                             <th>📧 Email</th>
                             <th>🎭 Role</th>
-                            <th>⚙️ Actions</th>
+                            <th>Dob</th>
+                            <th>Doj</th>
+                            <th>Doc</th>
+                            <th>Post</th>
+                            <th>⚙️</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $index = 1 ; ?>
                         @foreach($users as $user)
                         <tr>
-                            <td class="fw-semibold text-dark">{{ $index++}}</td>
                             <td>{{ $user->name }}</td>
                             <td class="text-muted">{{ $user->email }}</td>
                             <td>
@@ -78,10 +81,14 @@
                                     {{ ucfirst($user->role) }}
                                 </span>
                             </td>
+                            <td>{{ $user->dob }}</td>
+                            <td>{{ $user->doj }}</td>
+                            <td>{{ $user->doc }}</td>
+                            <td>{{ $user->designation }}</td>
                             <td>
                                 <a href="{{ route('users.edit', $user) }}" 
                                    class="btn btn-sm btn-warning btn-animated me-1">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                                    <i class="bi bi-pencil-square"></i> Update
                                 </a>
                                 <form action="{{ route('users.destroy', $user) }}" 
                                       method="POST" class="d-inline">
@@ -90,7 +97,7 @@
                                     <button type="submit" 
                                             class="btn btn-sm btn-danger btn-animated"
                                             onclick="return confirm('Are you sure you want to delete this user?')">
-                                        <i class="bi bi-trash3"></i> Delete
+                                        <i class="bi bi-trash3"></i> Remove
                                     </button>
                                 </form>
                             </td>

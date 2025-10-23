@@ -34,10 +34,26 @@
                     </select>
                 </div>
 
+                <div class="form-group mb-3">
+                    <label for="designation" class="fw-bold">👤 Designation</label>
+                    <input type="text" name="designation" value="{{ $user->designation }}" 
+                           class="form-control form-control-lg rounded-pill shadow-sm">
+                </div>
+
                 <div class="form-group mb-4">
                     <label for="password" class="fw-bold">🔑 Password <small>(Leave blank if not changing)</small></label>
                     <input type="password" name="password" 
                            class="form-control form-control-lg rounded-pill shadow-sm">
+                </div>
+
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" name="dob" value="{{$user->dob}}" id="dob" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="doc" class="form-label">Date of Confirmation</label>
+                    <input type="date" name="doc" value="{{$user->doc}}" id="doc" class="form-control">
                 </div>
 
                 <div class="d-flex justify-content-between">

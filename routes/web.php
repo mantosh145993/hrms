@@ -68,6 +68,7 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function () {
     Route::get('/attendance/report/export', [AttendanceController::class, 'exportAttendanceReport'])->name('attendance.report.export');
     Route::get('attendance/export', [\App\Http\Controllers\Admin\AttendanceController::class, 'export'])->name('attendance.report.export');
     Route::post('update/reason',[LeaveTypeController::class,'updateReason'])->name('update.reason');
+    Route::post('/leaves/update/{id}', [LeaveController::class, 'updateField'])->name('leaves.update');
 
 
 });

@@ -63,6 +63,7 @@
                                 <tr>
                                     <th>From</th>
                                     <th>To</th>
+                                    <th>Days</th>
                                     <th>Type</th>
                                     <th>Reason</th>
                                     <th>Status</th>
@@ -78,12 +79,9 @@
                                     <td class="fw-semibold">
                                         {{ \Carbon\Carbon::parse($leave->end_date)->format('d M Y (D)') }}
                                     </td>
+                                    <td>{{$leave->days ?? ''}}</td>
                                     <td>
-                                        @if($leave->type == 8)
-                                        <span class="badge bg-primary text-white px-3 py-2">PL</span>
-                                        @else
-                                        <span class="badge bg-secondary text-white px-3 py-2">N/A</span>
-                                        @endif
+                                        <span class="badge bg-primary text-white px-3 py-2">{{ $leave->leaveType->name ?? 'N/A' }}</span>  
                                     </td>
                                     <td>{{ $leave->reason }}</td>
                                     <td>

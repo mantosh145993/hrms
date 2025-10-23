@@ -77,10 +77,25 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="designation" class="form-label fw-bold">👨 Designation</label>
+                    <input type="text" name="designation" id="designation" class="form-control" placeholder="Enter employee designation" required>
+                </div>
+
                 {{-- Password --}}
                 <div class="mb-3">
                     <label for="password" class="form-label fw-bold">🔑 Password</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="Enter a strong password" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" class="form-control">
+                </div>
+
+                 <div class="mb-3">
+                    <label for="doj" class="form-label">Date of Joining</label>
+                    <input type="date" name="doj" id="doj" class="form-control">
                 </div>
 
                 {{-- Buttons --}}
