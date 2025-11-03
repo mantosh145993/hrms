@@ -52,6 +52,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="doj" class="form-label">Date of Joining</label>
+                    <input type="date" name="doj" value="{{$user->doj}}" id="doj" class="form-control">
+                </div>
+
+                <div class="mb-3">
                     <label for="doc" class="form-label">Date of Confirmation</label>
                     <input type="date" name="doc" value="{{$user->doc}}" id="doc" class="form-control">
                 </div>
