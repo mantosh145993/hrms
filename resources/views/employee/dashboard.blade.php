@@ -68,7 +68,21 @@
 </style>
 
 <div class="container my-4">
-    <h4 class="text-center mb-4">🌟 Welcome, {{ Auth::user()->name }}</h4>
+    <h4 class="text-center mb-4 text-dark">🌟 Welcome, {{ Auth::user()->name }}</h4>
+    <strong style="color:red">Official Notice: Office Timing & Attendance Policy</strong>
+    <p style="color:#000">
+       This serves as a final reminder regarding adherence to office timing and punctuality.
+
+The official working hours are 10:00 AM to 6:30 PM. A monthly grace allowance of four (4) days is permitted, during which employees may arrive up to 15 minutes late without penalty.
+
+However, if an employee exceeds the 15-minute grace period on more than four occasions within a single calendar month, it will be treated as a violation of company policy and will result in immediate termination of employment.
+
+Attendance will be closely monitored. No exceptions will be made unless prior written approval has been obtained from management in the case of a documented emergency.
+
+All employees are expected to strictly comply with the prescribed office hours to avoid disciplinary action.
+
+— By Order of the CEO
+    </p>
     <div class="text-center mb-4">
         <small class="text-muted">🕒 Current Time</small>
         <div id="clock"></div>
@@ -137,52 +151,52 @@
         </div>
     </div>
     <div class="card shadow mb-4">
-      <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary text-center">Employee Overview</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle text-center">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Employee</th>
-                        <th>Designation</th>
-                        <th>DOJ</th>
-                        <th>DOC</th>
-                        <th>Duration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="fw-semibold">{{ $attendance->user->name ?? 'N/A' }}</td>
-                        <td class="fw-semibold">{{ $attendance->user->designation ?? 'N/A' }}</td>
-                        <td>
-                            <span class="badge bg-primary text-white">
-                                {{ $attendance->user->doj ? \Carbon\Carbon::parse($attendance->user->doj ?? 'N/A')->format('d M, Y') : 'N/A' }}
-                            </span>
-                        </td>
-                        <td>
-                            @if($attendance->user->doc)
-                                <span class="badge bg-success">
-                                    {{ \Carbon\Carbon::parse($attendance->user->doc ?? 'N/A')->format('d M, Y') }}
-                                </span>
-                            @else
-                                <span class="badge bg-warning text-dark">Pending</span>
-                            @endif
-                        </td>
-                        <td>
-                            <span class="badge bg-info text-white">{{ $duration ?? 'N/A' }}</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Employee Overview</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Employee</th>
+                                <th>Designation</th>
+                                <th>DOJ</th>
+                                <th>DOC</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold">{{ @$attendance->user->name ?? 'N/A' }}</td>
+                                <td class="fw-semibold">{{ @$attendance->user->designation ?? 'N/A' }}</td>
+                                <td>
+                                    <span class="badge bg-primary text-white">
+                                        {{ @$attendance->user->doj ? \Carbon\Carbon::parse(@$attendance->user->doj ?? 'N/A')->format('d M, Y') : 'N/A' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if(@$attendance->user->doc)
+                                    <span class="badge bg-success text-white">
+                                        {{ \Carbon\Carbon::parse(@$attendance->user->doc ?? 'N/A')->format('d M, Y') }}
+                                    </span>
+                                    @else
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span class="badge bg-info text-white">{{ $duration ?? 'N/A' }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
     </div>
-   <!-- End Out  -->
+    <!-- End Out  -->
     <div class="card border-0 shadow">
         <div class="card-header gradient-header d-flex justify-content-between align-items-center">
             <span class="fw-semibold"><i class="bi bi-calendar-check me-2"></i>Today's Attendance</span>

@@ -34,11 +34,21 @@ class Attendance extends Model
 
     public function getWorkedTimeAttribute()
     {
-        if (!$this->check_in_at || !$this->check_out_at) return null;
-        $workedMinutes = $this->check_in_at->diffInMinutes($this->check_out_at);
-        $hours = intdiv($workedMinutes, 60);
-        $minutes = $workedMinutes % 60;
-        return "{$hours}h {$minutes}m";
+        if (!$this->check_in_at || !$this->check_out_at) {
+            return '0h 0m';
+        }
+
+        $checkIn = Carbon::parse($this->check_in_at);
+        $checkOut = Carbon::parse($this->check_out_at);
+
+        // Total worked minutes
+        $workedMinutes = $checkIn->diffInMinutes($checkOut);
+
+        // Deduct only break (30 min)
+        $breakMinutes = 30;
+        $netWorkedMinutes = max(0, $workedMinutes - $breakMinutes);
+
+        return sprintf("%dh %dm", floor($netWorkedMinutes / 60), $netWorkedMinutes % 60);
     }
 
     public function getLateTimeAttribute()
@@ -46,15 +56,23 @@ class Attendance extends Model
         if (!$this->check_in_at) {
             return "0h 0m 0s";
         }
+
         $checkIn = Carbon::parse($this->check_in_at);
         $shiftStart = $this->work_date
             ? Carbon::parse($this->work_date)->setTime(10, 0, 0)
             : $checkIn->copy()->setTime(10, 0, 0);
+
         if ($checkIn->lte($shiftStart)) {
             return "0h 0m 0s";
         }
+
         $lateSeconds = $shiftStart->diffInSeconds($checkIn);
-        return TimeHelper::formatSeconds($lateSeconds);
+        return sprintf(
+            "%dh %dm %ds",
+            floor($lateSeconds / 3600),
+            floor(($lateSeconds % 3600) / 60),
+            $lateSeconds % 60
+        );
     }
 
     public function getOvertimeAttribute()
@@ -64,11 +82,15 @@ class Attendance extends Model
         }
         $checkIn = Carbon::parse($this->check_in_at);
         $checkOut = Carbon::parse($this->check_out_at);
+        // Total worked minutes
         $workedMinutes = $checkIn->diffInMinutes($checkOut);
-        // Standard shift = 8 hours (480 minutes)
+        // Deduct break
+        $breakMinutes = 30;
+        $netWorkedMinutes = max(0, $workedMinutes - $breakMinutes);
+        // Standard shift = 8 hours work (480 min)
         $shiftDuration = 480;
-        if ($workedMinutes > $shiftDuration) {
-            $overtime = $workedMinutes - $shiftDuration;
+        if ($netWorkedMinutes > $shiftDuration) {
+            $overtime = $netWorkedMinutes - $shiftDuration;
             return sprintf("%dh %dm", floor($overtime / 60), $overtime % 60);
         }
         return '0h 0m';

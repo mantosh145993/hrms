@@ -81,50 +81,108 @@ class DashboardController extends Controller
         return response()->json(['message' => 'Task status updated successfully!']);
     }
     // Employee Attandance 
-    public function attendance()
-    {
-        $user = Auth::user();
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate   = Carbon::now()->endOfMonth();
-        // All days in the current month
-        $daysInMonth = $startDate->daysUntil($endDate->copy()->addDay());
-        // Get attendance records for this user
-        $attendances = Attendance::where('user_id', $user->id)
-            ->whereBetween('work_date', [$startDate, $endDate])
-            ->get()
-            ->keyBy(fn($att) => $att->work_date->toDateString());
-        // Get holidays
-        $holidays = Holiday::all();
-        // Get approved leaves
-        $leaves = Leave::where('user_id', $user->id)
-            ->where('status', 'approved')
-            ->get();
-        $calendar = [];
-        foreach ($daysInMonth as $day) {
-            $dateStr = $day->toDateString();
-            $attendance = $attendances[$dateStr] ?? null;
-            $status = 'absent';
-            if ($day->isSunday()) {
-                $status = 'sunday';
-            } elseif ($holidays->where('date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->count()) {
-                $status = 'holiday';
-            } elseif ($leave = $leaves->where('start_date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->first()) {
-                $status = 'on_leave';
-            } elseif ($attendance) {
-                $status = $attendance->status ?? 'present';
-            }
-            $calendar[] = [
-                'date'         => $dateStr,
-                'check_in_at'  => $attendance->check_in_at ?? null,
-                'check_out_at' => $attendance->check_out_at ?? null,
-                'worked_time'  => $attendance?->worked_time,
-                'late_time'    => $attendance?->late_time,
-                'overtime'     => $attendance?->overtime ?? null,
-                'status'       => $status,
-            ];
+    // public function attendance()
+    // {
+    //     $user = Auth::user();
+    //     $startDate = Carbon::now()->startOfMonth();
+    //     $endDate   = Carbon::now()->endOfMonth();
+    //     // All days in the current month
+    //     $daysInMonth = $startDate->daysUntil($endDate->copy()->addDay());
+    //     // Get attendance records for this user
+    //     $attendances = Attendance::where('user_id', $user->id)
+    //         ->whereBetween('work_date', [$startDate, $endDate])
+    //         ->get()
+    //         ->keyBy(fn($att) => $att->work_date->toDateString());
+    //     // Get holidays
+    //     $holidays = Holiday::all();
+    //     // Get approved leaves
+    //     $leaves = Leave::where('user_id', $user->id)
+    //         ->where('status', 'approved')
+    //         ->get();
+    //     $calendar = [];
+    //     foreach ($daysInMonth as $day) {
+    //         $dateStr = $day->toDateString();
+    //         $attendance = $attendances[$dateStr] ?? null;
+    //         $status = 'absent';
+    //         if ($day->isSunday()) {
+    //             $status = 'sunday';
+    //         } elseif ($holidays->where('date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->count()) {
+    //             $status = 'holiday';
+    //         } elseif ($leave = $leaves->where('start_date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->first()) {
+    //             $status = 'on_leave';
+    //         } elseif ($attendance) {
+    //             $status = $attendance->status ?? 'present';
+    //         }
+    //         $calendar[] = [
+    //             'date'         => $dateStr,
+    //             'check_in_at'  => $attendance->check_in_at ?? null,
+    //             'check_out_at' => $attendance->check_out_at ?? null,
+    //             'worked_time'  => $attendance?->worked_time,
+    //             'late_time'    => $attendance?->late_time,
+    //             'overtime'     => $attendance?->overtime ?? null,
+    //             'status'       => $status,
+    //         ];
+    //     }
+    //     return view('employee.attendance_summary', compact('user', 'calendar'));
+    // }
+
+    public function attendance(Request $request)
+{
+    $user = Auth::user();
+
+    // Get month & year from request (defaults to current)
+    $month = $request->input('month', Carbon::now()->month);
+    $year  = $request->input('year', Carbon::now()->year);
+
+    // Define start and end of selected month
+    $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+    $endDate   = Carbon::create($year, $month, 1)->endOfMonth();
+
+    // Get all days in the selected month
+    $daysInMonth = $startDate->daysUntil($endDate->copy()->addDay());
+
+    // Fetch attendance for this user and month
+    $attendances = Attendance::where('user_id', $user->id)
+        ->whereBetween('work_date', [$startDate, $endDate])
+        ->get()
+        ->keyBy(fn($att) => $att->work_date->toDateString());
+
+    // Fetch holidays & approved leaves
+    $holidays = Holiday::all();
+    $leaves = Leave::where('user_id', $user->id)
+        ->where('status', 'approved')
+        ->get();
+
+    // Build the monthly calendar array
+    $calendar = [];
+    foreach ($daysInMonth as $day) {
+        $dateStr = $day->toDateString();
+        $attendance = $attendances[$dateStr] ?? null;
+        $status = 'absent';
+
+        if ($day->isSunday()) {
+            $status = 'sunday';
+        } elseif ($holidays->where('date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->count()) {
+            $status = 'holiday';
+        } elseif ($leaves->where('start_date', '<=', $dateStr)->where('end_date', '>=', $dateStr)->first()) {
+            $status = 'on_leave';
+        } elseif ($attendance) {
+            $status = $attendance->status ?? 'present';
         }
-        return view('employee.attendance_summary', compact('user', 'calendar'));
+
+        $calendar[] = [
+            'date'         => $dateStr,
+            'check_in_at'  => $attendance->check_in_at ?? null,
+            'check_out_at' => $attendance->check_out_at ?? null,
+            'worked_time'  => $attendance?->worked_time,
+            'late_time'    => $attendance?->late_time,
+            'overtime'     => $attendance?->overtime,
+            'status'       => $status,
+        ];
     }
+
+    return view('employee.attendance_summary', compact('user', 'calendar', 'month', 'year'));
+}
     // Show Holiday 
     public function holiday()
     {
